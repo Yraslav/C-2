@@ -28,7 +28,7 @@ namespace Mygame
             // Запоминаем размеры формы
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
-            // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
+            // fghfghgfhjgfjghjghjghjСвязываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
             
             Load();
@@ -90,7 +90,7 @@ namespace Mygame
 
         }
 
-        Array.Clear(_objs, 0, 20);
+
     }
 }
         
