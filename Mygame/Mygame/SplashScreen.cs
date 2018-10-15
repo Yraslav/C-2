@@ -54,12 +54,15 @@ namespace Mygame
 
             if (text == "start") {
                 Form form = new Form();
-                form.Width = 800;
-                form.Height = 600;
+                {
+                    form.Width = 800;
+                    form.Height = 600;
+                }
+                
                 Game.Init(form);
                 form.Show();
+                Game.Load();
                 Game.Draw();
-              
 
             };
             if (text == "records") MessageBox.Show("ns yjkm");
