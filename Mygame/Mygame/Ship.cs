@@ -10,7 +10,7 @@ namespace Mygame
     class Ship : BaseObject
     {
         private readonly Image ship;
-        private int _energy = 10;
+        private int _energy = 100;
         public int Energy => _energy;
 
         public void EnergyLow(int n)

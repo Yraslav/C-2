@@ -11,8 +11,7 @@ namespace Mygame
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         private static List<Bullet> _bullet = new List<Bullet>();
-         private static List<Asteroid> _asteroids = new List<Asteroid>();
-        //private static Asteroid[] _asteroids;
+        private static Asteroid[] _asteroids;
         private static Heal[] _heal;
         // Свойства
         // Ширина и высота игрового поля
@@ -24,7 +23,6 @@ namespace Mygame
         }
         public static void Init(Form form)
         {
-
             
             // Графическое устройство для вывода графики            
             Graphics g;
@@ -88,17 +86,16 @@ namespace Mygame
 
             _objs = new BaseObject[9];
             //_bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
-            //_asteroids = new Asteroid[8];
-            _asteroids.Add( new Asteroid(new Point(500, 500), new Point(80, 80), new Size(10, 10)));
+            _asteroids = new Asteroid[9];
             _heal = new Heal[1];
             var rnd = new Random();
 
-            //for (var i = 0; i < _asteroids.Count; i++)
-            //{
-            //    int r = rnd.Next(5, 50);
-            //    _asteroids[i] = new Asteroid(new Point(500, rnd.Next(0, Game.Height)), new Point(r, r), new Size(r, r));
+            for (var i = 0; i < _asteroids.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(500, rnd.Next(0, Game.Height)), new Point(r, r), new Size(r, r));
 
-            //}
+            }
 
             for (var i = 0; i < _objs.Length; i++)
             {
@@ -114,11 +111,10 @@ namespace Mygame
 
 
         }
-        
-        
+      
         public static void Draw()
         {
-            //Buffer.Graphics.DrawImage(Fon);
+           
             Buffer.Graphics.Clear(Color.Black);
             Buffer.Graphics.FillEllipse(Brushes.Red, new Rectangle(40, 40, 40, 40));
 
@@ -161,23 +157,23 @@ namespace Mygame
 
 
             foreach (BaseObject obj in _objs) obj.Update();
-            /*_bullet?.Update()*/;
+            //_bullet?.Update();
+        
 
-            #region Жизни
             for (var i = 0; i < _heal.Length; i++)
             {
                 if (_heal[i] == null) continue;
                 _heal[i].Update();
-                for (int j = 0; j < _bullet.Count - 1; j++)
+                for (int j = 0; j < _bullet.Count; j++)
                     if (_bullet != null && _bullet[j].Collision(_asteroids[i]))
 
-                    {
-                        System.Media.SystemSounds.Hand.Play();
-                        _heal[i] = null;
-                        _bullet[j] = null;
-                        continue;
+                {
+                    System.Media.SystemSounds.Hand.Play();
+                    _heal[i] = null;
+                    _bullet = null;
+                    continue;
 
-                    }
+                }
 
                 if (!_ship.Collision(_heal[i])) continue;
 
@@ -185,15 +181,12 @@ namespace Mygame
                 _ship?.EnergyUp(rnd.Next(1, 10));
                 System.Media.SystemSounds.Asterisk.Play();
 
-                if (_ship.Energy <= 0) _ship?.Die();
+                //if (_ship.Energy <= 0) _ship?.Die();
                 }
-            #endregion
-            foreach (BaseObject b in _bullet) b.Update();
-
-            for (var i = 0; i < _asteroids.Count; i++)
+            foreach (Bullet b in _bullet) b.Update();
+            for (var i = 0; i < _asteroids.Length; i++)
             {
                 if (_asteroids[i] == null) continue;
-               
                 _asteroids[i].Update();
                 for (int j = 0; j < _bullet.Count; j++)
                     if (_asteroids[i] != null && _bullet[j].Collision(_asteroids[i]))
