@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-
+using System.ComponentModel;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -37,8 +37,32 @@ namespace Lesson_5
             Wor.Add(new Employee() { Id = 3, Name = "Ярик", Age = 23, Salary = 8000 });
             Worked.ItemsSource = Wor;
 
-            
         }
+
+        private void Worked_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            new Windowedd(Worked.SelectedItem as Employee).ShowDialog();
+        }
+
+        private void Workadd(object sender, RoutedEventArgs e)
+        {
+            Wor.Add(new Employee() { Id = 4, Name = "Sergey", Age = 26, Salary = 7000 });
+
+        }
+
+        private void WorkChange(object sender, RoutedEventArgs e)
+        {
+            if (Worked.SelectedItem != null)
+                (Worked.SelectedItem as Employee).Salary = 10000;
+        }
+
+        private void DeleteWork(object sender, RoutedEventArgs e)
+        {
+            if (Worked.SelectedItem != null)
+                Wor.Remove(Worked.SelectedItem as Employee);
+        }
+
+
 
         void FillList1(object sender, RoutedEventArgs b)
         {
@@ -60,35 +84,83 @@ namespace Lesson_5
             MessageBox.Show(e.AddedItems[0].ToString());
         }
 
+
        
-
-        private void Workadd(object sender, RoutedEventArgs e)
-        {
-            Wor.Add(new Employee() { Id = 4, Name = "Sergey", Age = 26, Salary = 7000 });
-            
-            }
-        
-
-        
     }
 
-    public class Employee
+
+
+}
+
+public class Employee : INotifyPropertyChanged
+{
+    public int Id { get; set; }
+    private double age;
+    public double Age
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public double Salary { get; set; }
-        public override string ToString()
+        get { return this.age; }
+        set
         {
-            return $"{Id}\t{Name}\t{Age}\t{Salary}";
+            if (this.age != value)
+            {
+                this.age = value;
+                this.NotifyPropertyChanged("Age");
+            }
         }
     }
-    public class Depatment
+    private string name;
+    public string Name
+    {
+        get { return this.name; }
+        set
+        {
+            if (this.name != value)
+            {
+                this.name = value;
+                this.NotifyPropertyChanged("Name");
+            }
+        }
+    }
+  
+
+
+    //public double Salary { get; set; }
+    public override string ToString()
+    {
+        return $"{Id}\t{Name}\t{Age}\t{Salary}";
+    }
+    private double salary;
+    public double Salary
+    {
+        get { return this.salary; }
+        set
+        {
+            if (this.salary != value)
+            {
+                this.salary = value;
+                this.NotifyPropertyChanged("Salary");
+            }
+        }
+    }
+    public event PropertyChangedEventHandler PropertyChanged;
+    public void NotifyPropertyChanged(string propName)
+    {
+        if (this.PropertyChanged != null)
+            this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+    }
+}
+
+
+public class Depatment
     {
         public string NameDep { get; set; }
         public override string ToString()
         {
             return $"{NameDep}\t";
         }
-    }
 }
+
+
+
+
+ 

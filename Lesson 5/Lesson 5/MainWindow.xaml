@@ -7,9 +7,9 @@
         xmlns:local="clr-namespace:Lesson_5"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid RenderTransformOrigin="0.5,0.5">
+    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,3.6,-20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="33*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*"/>
@@ -17,16 +17,7 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Name="Depatment" SelectionMode="Multiple" 
-                 SelectionChanged="List_SelectionChanged"
-                 VerticalAlignment="Top" 
-                 Height="410" Grid.Column="1" Margin="0.4,0,0.2,0" >
-
-        </ListBox>
-        <ListBox Name="Worked" SelectionMode="Single" 
-                 SelectionChanged="List_SelectionChanged"
-                 VerticalAlignment="Top" 
-                 Height="410" Margin="1,0,317.2,0" Grid.ColumnSpan="2" />
+       
 
         <Button  x:Name="Worker" Content="Сотрудники" 
                 Grid.Column="2" 
@@ -36,7 +27,7 @@
                 Click="FillList"
                 VerticalAlignment="Center" 
                  
-                Background="#FFBA2525" BorderBrush="#FF592020" Margin="44.4,22,38.6,379" Height="19" Width="69" 
+                Background="#FFBA2525" BorderBrush="#FF592020" Margin="5,10,0.4,389" Height="41" Width="153" 
                 
                 >
 
@@ -53,29 +44,73 @@
                 VerticalAlignment="Center" 
                  
                 Background="#FFBA2525" BorderBrush="#FF592020" 
-                OpacityMask="Yellow" Width="120" Height="23" Margin="22.4,251,9.6,146" 
+                OpacityMask="Yellow" Height="41" Width="153"  Margin="5,207,0.4,192" 
                 >
 
             <Button.BindingGroup>
                 <BindingGroup/>
             </Button.BindingGroup>
         </Button>
-
-
 
         <Button  x:Name="Depart" Content="Департамент" 
                 Grid.Column="2"
                 HorizontalAlignment="Center" 
                 Click="FillList1"
                 VerticalAlignment="Center" 
-                Background="#FFBA2525" BorderBrush="#FF592020" Margin="44.4,58,32.6,342" Height="20" Width="75" 
-                
-                >
+                Background="#FFBA2525" BorderBrush="#FF592020" 
+                 Margin="5,68,0.4,331" Height="41" Width="153"  >
 
             <Button.BindingGroup>
                 <BindingGroup/>
             </Button.BindingGroup>
         </Button>
+        <ListView Name="Worked" MouseDoubleClick = "Worked_MouseDoubleClick" 
+                  HorizontalAlignment="Center"
+                  Height="418" VerticalAlignment="Center"
+                  Width="306" Margin="5,11" 
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                         Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn
+                         Header="Имя" Width="70" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Возраст" Width="50" DisplayMemberBinding="{Binding Age}" />
+                    <GridViewColumn Header="Зарплата" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Salary}" Foreground="Blue" FontWeight="Bold" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Name="Depatment" Grid.Column="1" HorizontalAlignment="Center" Height="418" VerticalAlignment="Center" Width="306" Margin="5,11">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                         Header="Департамент" Width="120" DisplayMemberBinding="{Binding NameDep}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Изменить" 
+                Grid.Column="2" HorizontalAlignment="Left" 
+                Margin="5,253,0,0" VerticalAlignment="Top"
+                Click="WorkChange"
+                Height="41" Width="153" 
+                Background="#FFBA2525" BorderBrush="#FF592020"
+                />
+
+        <Button Content="Удалить" 
+                Grid.Column="2" 
+                HorizontalAlignment="Left" 
+                Margin="5,299,0,0" 
+                Click="DeleteWork"
+                VerticalAlignment="Top" Height="41" Width="153" 
+                Background="#FFBA2525" BorderBrush="#FF592020"  
+                />
 
     </Grid>
 </Window>
